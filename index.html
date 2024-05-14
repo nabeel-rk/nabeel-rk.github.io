@@ -18,7 +18,7 @@
             padding: 20px;
             text-align: center;
             border: 2px solid black;
-            border-radius: 10px;
+            border-radius: 12px;
             text-shadow: 
                 -1px -1px 0 black,  
                 1px -1px 0 black,
@@ -26,11 +26,22 @@
                 1px 1px 0 black;
         }
         p {
-            color: red;
-            text-align: center;
+            color: black;
+            text-align: left;
         }
         h2 {
+            text-align: left;
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
             text-align: center;
+            border: 2px solid black;
+            border-radius: 6px;
+            text-shadow: 
+                -1px -1px 0 black,  
+                1px -1px 0 black,
+                -1px 1px 0 black,
+                1px 1px 0 black;
         }
         .container {
             width: 90%;
@@ -70,16 +81,36 @@
 
         /* Additional styles for responsive design */
         .menu-button {
-            display: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             background-color: #333;
             color: #fff;
-            padding: 10px 20px;
+            padding: 15px;
             border: none;
             cursor: pointer;
             text-align: center;
-            border-radius: 5px;
+            border-radius: 50%;
             margin: 10px;
             font-size: 1.2em;
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+            width: 50px;
+            height: 50px;
+            transition: background-color 0.3s ease;
+        }
+        .menu-button span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: #fff;
+            margin: 4px 0;
+            transition: 0.4s;
+        }
+        .menu-button:hover {
+            background-color: #555;
         }
         .sidebar {
             position: fixed;
@@ -92,6 +123,10 @@
             text-align: center;
             overflow-y: auto;
             transition: left 0.5s;
+            z-index: 999;
+        }
+        .sidebar.active {
+            left: 0;
         }
         .sidebar ul {
             list-style: none;
@@ -123,34 +158,24 @@
             transform: translateY(0);
         }
 
-        /* Media queries for responsiveness */
-        @media (max-width: 768px) {
-            .menu-button {
-                display: block;
-            }
-            .sidebar {
-                left: -200px;
-            }
-            .sidebar.active {
-                left: 0;
-            }
-            .content {
-                margin-left: 0;
-            }
-            header {
-                border-radius: 0;
-            }
-            form {
-                padding: 15px;
-            }
+        /* Updated styles for project section */
+        #projects {
+            text-align: center;
         }
-        @media (max-width: 480px) {
-            header {
-                padding: 15px;
-            }
-            input[type="submit"] {
-                padding: 10px;
-            }
+        .project-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .project-box {
+            background-color: #4b4a4a;
+            border: 2px solid black;
+            border-radius: 12px;
+            padding: 20px;
+            width: calc(33.33% - 20px); /* Adjust width for equal spacing */
+        }
+        .lighter {
+            background-color: #666; /* Lighter color */
         }
     </style>
 </head>
@@ -160,7 +185,11 @@
     <h1>Nabeel's Website</h1>
 </header>
 
-<button class="menu-button">Menu</button>
+<button class="menu-button" id="menuButton" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+</button>
 
 <div class="sidebar">
     <ul>
@@ -170,29 +199,32 @@
     </ul>
 </div>
 
-<div class="content">
+<div class="content" onclick="closeMenu()">
     <div class="container">
         <section id="about" class="fade-in">
             <h2><u>About Me</u></h2>
-            <p>This is filler text, this text's main purpose is to fill this space.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In blandit arcu viverra, varius leo et, congue erat. In et efficitur nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Maecenas luctus libero eget arcu imperdiet cursus. Nunc ultricies at leo at feugiat. Donec molestie nec libero ut feugiat. Nam nisi felis, euismod vel interdum sed, bibendum vel diam. Integer pellentesque libero ut lectus eleifend, a feugiat elit molestie. Aenean in scelerisque tortor. Vivamus eu tincidunt velit, nec viverra orci. Pellentesque et tellus sed mi ultricies mollis. Proin mauris eros, commodo ut justo sed, viverra hendrerit erat. Quisque pretium et est id venenatis.</p>
         </section>
         <section id="projects" class="fade-in">
             <h2><u>Projects</u></h2>
-            <div class="project1">
-                <h3><u>Project 1</u>:</h3>
-                <p>Description of Project 1</p>
-            </div>
-            <div class="project1">
-                <h3><u>Project 2</u>:</h3>
-                <p>Description of Project 2</p>
-            </div>
-            <div class="project1">
-                <h3><u>Project 3</u>:</h3>
-                <p>Description of Project 3</p>
+            <div class="project-container">
+                <div class="project-box">
+                    <h3><u>Project 1</u>:</h3>
+                    <p>Description of Project 1</p>
+                </div>
+                <div class="project-box">
+                    <h3><u>Project 2</u>:</h3>
+                    <p>Description of Project 2</p>
+                </div>
+                <div class="project-box">
+                    <h3><u>Project 3</u>:</h3>
+                    <p>Description of Project 3</p>
+                </div>
             </div>
         </section>
         <section id="contact" class="fade-in">
-            <form action="send_form.php" method="post">
+            <h2><u>Contact Us</u></h2>
+            <form action="https://formspree.io/f/mwkgzqeg" method="post">
                 <label for="name">Name:</label><br>
                 <input type="text" id="name" name="name" required><br>
                 <label for="email">Email:</label><br>
@@ -206,21 +238,19 @@
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const menuButton = document.querySelector('.menu-button');
+    function toggleMenu() {
         const sidebar = document.querySelector('.sidebar');
-        const content = document.querySelector('.content');
+        sidebar.classList.toggle('active');
+    }
 
-        menuButton.addEventListener('click', () => {
-            sidebar.classList.toggle('active');
-        });
+    function closeMenu() {
+        const sidebar = document.querySelector('.sidebar');
+        if (sidebar.classList.contains('active')) {
+            sidebar.classList.remove('active');
+        }
+    }
 
-        content.addEventListener('click', () => {
-            if (sidebar.classList.contains('active')) {
-                sidebar.classList.remove('active');
-            }
-        });
-
+    document.addEventListener('DOMContentLoaded', () => {
         const sections = document.querySelectorAll('.fade-in');
         const options = {
             threshold: 0.5
